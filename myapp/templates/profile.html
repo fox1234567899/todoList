@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+
+{%block title%}Profile{%endblock%}
+
+
+
+{% block content %}
+
+
+<style>
+  #username{
+        border:1px solid blue;
+        padding:10px;
+        border-radius:20px;
+  }
+   #avatar{
+      border:1px solid blue;
+        padding:10px;
+        border-radius:20px;
+
+  }
+   #email{
+      border:1px solid blue;
+        padding:10px;
+        border-radius:20px;
+  }
+
+
+</style>
+<div class="mt-20 flex justify-center">
+  <div class="shadow-2xl bg-white max-w-lg w-full rounded-lg font-mono">
+    <form method="POST" enctype="multipart/form-data" class="p-6">
+      {% csrf_token %}
+      
+      <!-- Avatar -->
+      <div class="rounded-2xl shadow-2xl mb-6 flex justify-center">
+        {% if user.profile %}
+          {% thumbnail user.profile.avatar "150x150" crop="center" as im %}
+            <img src="{{ im.url }}" class="rounded-full w-36 h-36 object-cover border">
+          {% endthumbnail %}
+        {% endif %}
+
+      </div>
+      
+   
+      <div class="text-center mb-6">
+        <h2 class="font-bold text-2xl text-gray-800">Profile</h2>
+        <p class="antialiased leading-tight text-gray-600">{{ user.username|title }}</p>
+        <p><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+      </div>
+
+        <div  class="mb-6">
+          <div>
+      <label for="username">Username</label>
+		<input type="text" id="username" name="username" value="{{user.username}}" />
+          </div>
+          <div class="my-5">
+		<label for="email">Email Address:</label>
+		<input type="email" id="email" name="email" value="{{user.email}}" />
+          </div>
+		
+		<label for="avatar">Avatar:</label>
+		<input type="file" name="avatar" id="avatar">	
+        </div>
+      <!-- Buttons -->
+      <div class="flex justify-center space-x-4 mt-6 border-t-2 border-gray-200 pt-4">
+        <input type="submit" value="Update"
+          class="shadow font-bold uppercase bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 cursor-pointer" />
+        <a href="/" class="shadow font-bold uppercase bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

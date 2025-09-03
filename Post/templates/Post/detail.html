@@ -1,0 +1,48 @@
+{%extends 'base.html'%}
+
+{%load thumbnail%}
+
+
+
+{%block title%}Detail Page{%endblock%}
+
+
+
+{%block content%}
+
+
+<div class=" my-10  max-w-sm mx-auto bg-gray-100 rounded-xl shadow-md overflow-hidden md:max-w-2xl" style="margin:20px 20px;">
+  <div class="md:flex">
+    <div class="md:flex-shrink-0">
+        {%if posts%}
+        {% thumbnail posts.image "310x310" crop="center" as im %}
+         <img src="{{im.url}}" class="w-full h-full object-cover border ">		
+        {% endthumbnail %}
+        {%endif%}
+        
+    </div>
+    <div class="p-8">
+      <h1 style="color:#3F00FF">Title:</h1>
+
+      <div class="uppercase tracking-wide text-sm text-black-500 font-semibold ">{{posts.title}}</div>
+       <h1 style="color:#3F00FF">description:</h1>
+      <p href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{{posts.description|default:""}}</p>
+       <h1 style="color:#3F00FF">Time:</h1>
+      <p class="mt-2 text-gray-500">{{posts.time|default:""}}</p>
+   <span class="badge {% if posts.checked %}badge-completed{% else %}badge-pending{% endif %}">
+  <h1 style="color:#3F00FF">checked:</h1>
+ 
+  <span class="badge {% if posts.checked %}badge-completed{% else %}badge-pending{% endif %}">
+    {% if posts.checked %} Completed {% else %} Pending {% endif %}
+</span>
+
+      
+       
+      </div>
+    </div>
+  </div>
+
+
+
+
+{%endblock%}

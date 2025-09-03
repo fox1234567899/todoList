@@ -1,0 +1,140 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>{%block title%}{%endblock%}</title>
+</head>
+<body>
+<nav class="w-full flex flex-wrap items-center justify-between p-3 bg-teal-200/20">
+   <a href="/"><i class='bx bx-sun' style="font-size: 40px; color: orange;"></i><h1 class="mx-4 font-bold text-teal-900 hover:text-teal-500" style="font-size:40px;display:inline-block;">ToDO-List</h1></a>
+   <a></a>
+    <div class="flex md:hidden">
+        <button id="hamburger">
+          <img class="toggle block" src="https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png" width="48" height="48" />
+          <img class="toggle hidden" src="https://img.icons8.com/fluent-systems-regular/2x/close-window.png" width="48" height="48" />
+        </button>
+    </div>
+    <div
+        class="toggle hidden w-full md:w-auto md:flex text-right text-bold mt-5 md:mt-0 border-t-2 border-teal-900 md:border-none">
+         <a href="/"
+            class="block md:inline-block text-teal-900 hover:text-teal-500 px-3 py-3 border-b-2 border-teal-900 md:border-none ">Home
+        </a>
+        {%if user.is_authenticated%}
+        
+        <a href="{%url 'Post:list'%}"
+            class="block md:inline-block text-teal-900 hover:text-teal-500 px-3 py-3 border-b-2 border-teal-900 md:border-none">myList
+        </a>
+        <a href="{%url 'Post:create'%}"
+            class="block md:inline-block text-teal-900 hover:text-teal-500 px-3 py-3 border-b-2 border-teal-900 md:border-none js-todo">addTOdo
+        </a>
+        <a href="{%url 'myapp:profile'%}"
+            class="block md:inline-block text-teal-900 hover:text-teal-500 px-3 py-3 border-b-2 border-teal-900 md:border-none">Profile
+        </a>
+        <p class="block md:inline-block text-yellow-900 hover:text-yellow-500 px-3 py-3 border-b-2 border-teal-900 md:border-none">welcome {{user.username}}</p>
+       <form method="post" action="{% url 'myapp:logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="block md:inline-block text-teal-900 hover:text-teal-500 px-3 py-3 border-b-2 border-teal-900 md:border-none">
+                Logout
+            </button>
+        </form>
+        {%else%}
+       
+    </div>
+    <a href="{%url 'myapp:login'%}"
+        class="toggle hidden md:flex w-full md:w-auto px-4 py-2 text-right bg-teal-900 hover:bg-teal-500 text-white md:rounded">LogIn
+        
+    </a>
+    {%endif%}
+</nav>
+
+
+
+
+
+
+
+
+{%block content%}{%endblock%}
+
+
+
+
+<!-- component -->
+<div class="fixed inset-0 bg-gray-800/50 flex items-center justify-center z-50 hidden js-card">
+  <div class="  max-w-2xl  h-[670px]    w-full bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+    <svg class="ml-auto fill-current text-red-700 w-6 h-6 cursor-pointer js-todo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/>
+        </svg>
+    
+
+
+    <div class=" p-5 space-y-4">
+      <div>
+        <h3 class="text-xl font-bold text-gray-900">Title:</h3>
+        <input  data-post-url="{%url 'Post:create'%}"   type="text" class="border-2 border-blue-500 my-4 w-full js-post-title"placeholder="Enter your title" maxlength="100" />
+
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-gray-900">description:</h3>
+        <textarea  data-post-url="{%url 'Post:create'%}"    class="border-2 border-blue-500 my-4 w-full js-post-description"placeholder="Enter your things"row="3" maxlength="230" ></textarea>
+
+        
+      </div>
+      
+      <div class="justify-between items-center">
+        <div class="space-y-1">
+          <div style="display:inline-block" class=" my-3 text-xl font-bold text-gray-900">Time:</div>
+            <input data-post-url="{%url 'Post:create'%}"   type="datetime-local"  class="border-2 border-blue-500 my-4 w-full js-post-time" maxlength="100"  />
+
+        </div>
+          <div class="justify-between items-center">
+        <div class="space-y-1">
+          <div style="display:inline-block" class=" my-3 text-xl font-bold text-gray-900">image:</div>
+            <input data-post-url="{%url 'Post:create'%}"  type="file"   class="border-2 border-blue-500 my-4 w-full js-post-image"  />
+
+        </div>
+
+        <div class="justify-between items-center">
+        <div class="space-y-1">
+          <div style="display:inline-block"  class=" my-3 text-xl font-bold text-gray-900">Checked:</div>
+            <input type="checkbox"  class=" border-2 border-blue-500 my-4  js-post-checked"        data-post-url="{%url 'Post:create'%}" />
+
+        </div>
+        
+        
+
+      <button class=" w-full my-10 px-6 bg-pink-600 hover:bg-pink-700 text-white font-medium py-3 rounded-lg transition-colors js-button" >
+       Submit
+      </button>
+ 
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+    document.getElementById("hamburger").onclick = function toggleMenu() {
+        const navToggle = document.getElementsByClassName("toggle");
+        for (let i = 0; i < navToggle.length; i++) {
+          navToggle.item(i).classList.toggle("hidden");
+        }
+      };
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="{%static 'js/main.js'%}"></script>
+</body>
+</html>

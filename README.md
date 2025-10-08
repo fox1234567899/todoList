@@ -14,7 +14,7 @@ Users can add, edit, and delete tasks, and mark them as complete.
 
 ---
 
-##ScrennShots
+## ScreenShots
 
 ![Homepage](screenshots/mytodosite.png)
 ![delete](screenshots/delete-part.png)

@@ -26,7 +26,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('', include(('myapp.urls', 'myapp'), namespace='myapp')),
     path('post/', include(('Post.urls', 'Post'), namespace='Post')),
-        path('reset_password/',auth_views.PasswordResetView.as_view(template_name="passwordview.html",html_email_template_name='passwordemail.html'),name='password_reset'),
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name="passwordview.html",html_email_template_name='passwordemail.html'),name='password_reset'),
     path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name="passworddone.html"),name='password_reset_done'),
     path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="passwordconfirm.html"),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name="passwordcomplete.html"),name='password_reset_complete'),
